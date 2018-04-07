@@ -9,4 +9,8 @@ include_directories(sample_library)
 add_subdirectory (sample_library)
 target_link_libraries(main sample_library)
 
+include_directories(sample_Qt_UI_library)
+add_subdirectory (sample_Qt_UI_library)
+target_link_libraries(main sample_Qt_UI_library)
+
 include(toolchain-settings.cmake)

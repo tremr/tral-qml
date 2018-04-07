@@ -16,19 +16,18 @@
 // along with tral-qml.  If not, see <http://www.gnu.org/licenses/>.
 
 
+#ifndef SAMPLE_QT_UI_LIBRARY_SAMPLEQTUI_H_
+#define SAMPLE_QT_UI_LIBRARY_SAMPLEQTUI_H_
 
-#include "SampleLibrary.h"
-#include <iostream>
 
-
-SampleLibrary::SampleLibrary()
-{}
-
-SampleLibrary::~SampleLibrary()
+class SampleQtUI
 {
-}
+public:
+	SampleQtUI();
+	~SampleQtUI();
 
-void SampleLibrary::say_hello() const
-{
-	std::cout << "!!!Hello World!!!" << std::endl;
-}
+	int start( int argc, char** argv );
+};
+
+
+#endif /* SAMPLE_QT_UI_LIBRARY_SAMPLEQTUI_H_ */

@@ -3,3 +3,6 @@
 .cproject
 .settings
 
+#local_helper_files
+local_environment_settings.info
+

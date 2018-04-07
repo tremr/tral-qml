@@ -1,0 +1,2 @@
+To connect Qt to a project, you must define an environment variable. For example:
+	export CMAKE_PREFIX_PATH=/<path to Qt>/Qt/Qt5.10.1/5.10.1/mingw53_32/

@@ -16,19 +16,38 @@
 // along with tral-qml.  If not, see <http://www.gnu.org/licenses/>.
 
 
+//#include "SampleQtUI.h"
 
-#include "SampleLibrary.h"
-#include <iostream>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QWidget>
+#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QLabel>
 
+#include "SampleQtUI.h"
 
-SampleLibrary::SampleLibrary()
+SampleQtUI::SampleQtUI()
 {}
 
-SampleLibrary::~SampleLibrary()
-{
-}
 
-void SampleLibrary::say_hello() const
+SampleQtUI::~SampleQtUI()
+{}
+
+
+int SampleQtUI::start( int argc, char** argv )
 {
-	std::cout << "!!!Hello World!!!" << std::endl;
+    QApplication app( argc, argv );
+
+    QWidget widget;
+    widget.resize( 640, 480 );
+    widget.setWindowTitle( "Hello, world!!!" );
+
+    QGridLayout *gridLayout = new QGridLayout( &widget );
+
+    QLabel * label = new QLabel( "Hello, world!!!" );
+    label->setAlignment( Qt::AlignVCenter | Qt::AlignHCenter );
+    gridLayout->addWidget( label );
+
+    widget.show();
+
+    return app.exec();
 }

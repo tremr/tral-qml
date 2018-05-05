@@ -19,9 +19,8 @@
 //#include "SampleQtUI.h"
 
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QWidget>
-#include <QtWidgets/QGridLayout>
-#include <QtWidgets/QLabel>
+#include <QQmlApplicationEngine>
+#include <QQuickWindow>
 
 #include "SampleQtUI.h"
 
@@ -35,19 +34,19 @@ SampleQtUI::~SampleQtUI()
 
 int SampleQtUI::start( int argc, char** argv )
 {
-    QApplication app( argc, argv );
+//	QQuickWindow::setSceneGraphBackend( QSGRendererInterface::Software ); // Improves the UI performance but uses more CPU resources.
+//	QCoreApplication::setAttribute(Qt::AA_UseOpenGLES); // Alternatives
+//	QCoreApplication::setAttribute(Qt::AA_UseSoftwareOpenGL);
+//	QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    QWidget widget;
-    widget.resize( 640, 480 );
-    widget.setWindowTitle( "Hello, world!!!" );
+	QGuiApplication app( argc, argv );
+	Q_INIT_RESOURCE( qml );
 
-    QGridLayout *gridLayout = new QGridLayout( &widget );
+    QQmlApplicationEngine engine( QUrl( QStringLiteral( "qrc:/main.qml" ) ) );
+	if (engine.rootObjects().isEmpty())
+		return -1;
 
-    QLabel * label = new QLabel( "Hello, world!!!" );
-    label->setAlignment( Qt::AlignVCenter | Qt::AlignHCenter );
-    gridLayout->addWidget( label );
-
-    widget.show();
-
-    return app.exec();
+	int const result = app.exec();
+	Q_CLEANUP_RESOURCE( qml );
+    return result;
 }

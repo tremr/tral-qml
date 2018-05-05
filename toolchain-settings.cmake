@@ -15,7 +15,7 @@ endif ()
 
 set (CMAKE_CXX_FLAGS "${MY_CXX_FLAGS}")
 set (CMAKE_CXX_FLAGS_DEBUG "-g -O0 -fno-reorder-blocks -fno-schedule-insns -fno-inline")
-set (CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
+set (CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG -mwindows")
 
 
 # Helpers---

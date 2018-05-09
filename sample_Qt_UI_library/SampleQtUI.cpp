@@ -16,13 +16,13 @@
 // along with tral-qml.  If not, see <http://www.gnu.org/licenses/>.
 
 
-//#include "SampleQtUI.h"
-
 #include <QtWidgets/QApplication>
-#include <QQmlApplicationEngine>
-#include <QQuickWindow>
+#include <QtQml/QQmlApplicationEngine>
+#include <QtQml/QQmlContext>
+#include <QtQuick/QQuickWindow>
 
 #include "SampleQtUI.h"
+#include "CustomListModel.h"
 
 SampleQtUI::SampleQtUI()
 {}
@@ -42,7 +42,12 @@ int SampleQtUI::start( int argc, char** argv )
 	QGuiApplication app( argc, argv );
 	Q_INIT_RESOURCE( qml );
 
-    QQmlApplicationEngine engine( QUrl( QStringLiteral( "qrc:/main.qml" ) ) );
+	CustomListModel model;
+	model.add();
+
+    QQmlApplicationEngine engine;
+	engine.rootContext()->setContextProperty( "dataModel", &model );
+	engine.load( QUrl( QStringLiteral( "qrc:/main.qml" ) ) );
 	if (engine.rootObjects().isEmpty())
 		return -1;
 

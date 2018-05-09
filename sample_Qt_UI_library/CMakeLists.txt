@@ -11,7 +11,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Widgets finds its own dependencies.
 find_package(Qt5 REQUIRED Quick)
 
-set(SOURCE_LIB SampleQtUI.cpp)
+set(SOURCE_LIB SampleQtUI.cpp CustomListModel.cpp)
 qt5_add_resources(RESOURCES qml.qrc)
 add_library(sample_Qt_UI_library STATIC ${SOURCE_LIB} ${RESOURCES})
 

@@ -23,7 +23,7 @@ ApplicationWindow
 {
 	visible: true
 	width: 350
-    height: 200
+	height: 400
 	
 	Item
 	{
@@ -39,13 +39,123 @@ ApplicationWindow
 			opacity: 0.4
 			radius: 10
 			anchors.centerIn: parent;
-			
-			Text
+
+			Column
 			{
-				anchors.horizontalCenter: parent.horizontalCenter
-				anchors.verticalCenter: parent.verticalCenter
-				text: "Hello World"
+				anchors.margins: 10
+				anchors.fill: parent
+				spacing: 10
+
+				ListView
+				{
+					id: view
+					model: dataModel
+					onCurrentIndexChanged: dataModel.current_row = currentIndex
+					cacheBuffer: 320
+
+					width: parent.width
+					height: parent.height - buttons.height - parent.spacing
+					spacing: 10
+					clip: true
+
+					highlight: Rectangle
+					{
+						color: "green"
+					}
+					highlightFollowsCurrentItem: true
+
+					delegate: Rectangle
+					{
+						width: view.width
+						height: 40
+						color: "skyblue"
+
+						property var isCurrent: ListView.isCurrentItem
+
+						Text
+						{
+							anchors.centerIn: parent
+							renderType: Text.NativeRendering
+							text: "%2 %1".arg( model.text ).arg( isCurrent ? "*" : "-" )
+							color: model.color
+						}
+
+						MouseArea
+						{
+							anchors.fill: parent
+							onClicked:
+							{
+								view.currentIndex = model.index
+							}
+						}
+					}
+				}
 			}
+
+
+			Row
+			{
+				id: buttons
+				anchors.horizontalCenter: parent.horizontalCenter
+				anchors.bottom: parent.bottom
+				anchors.bottomMargin: 10
+				spacing: 10
+
+				Rectangle
+				{
+					id: buttonAdd
+
+					width: 100
+					height: 40
+
+					border
+					{
+						color: "black"
+						width: 1
+					}
+
+					Text
+					{
+						anchors.centerIn: parent
+						renderType: Text.NativeRendering
+						text: "Add"
+					}
+
+					MouseArea
+					{
+						anchors.fill: parent
+						onClicked: dataModel.add()
+					}
+				}
+
+				Rectangle
+				{
+					id: buttonRemove
+
+					width: 100
+					height: 40
+
+					border
+					{
+						color: "black"
+						width: 1
+					}
+
+					Text
+					{
+						anchors.centerIn: parent
+						renderType: Text.NativeRendering
+						text: "Remove"
+					}
+
+					MouseArea
+					{
+						anchors.fill: parent
+						onClicked: dataModel.remove()
+					}
+				}
+			}
+
 		}
 	}
 }

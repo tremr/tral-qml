@@ -22,7 +22,7 @@ import QtQuick.Controls 2.3
 ApplicationWindow
 {
 	visible: true
-	width: 350
+	width: 450
 	height: 400
 	
 	Item
@@ -76,7 +76,8 @@ ApplicationWindow
 						{
 							anchors.centerIn: parent
 							renderType: Text.NativeRendering
-							text: "%2 %1".arg( model.text ).arg( isCurrent ? "*" : "-" )
+							textFormat: Text.RichText
+							text: "%2 %1".arg( model.text ).arg( isCurrent ? "<b>*</b>" : "-" )
 							color: model.color
 						}
 

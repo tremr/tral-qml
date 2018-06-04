@@ -1,14 +1,14 @@
-#tral-qml
+# tral-qml
 
 
-###Introduction
+### Introduction
 
 `tral-qml` at the moment is just an example of C++, CMake and QML integration.
 
 Written in C++ using Qt 5 framework with CMake.
 
 
-###How to install (you will need CMake and Qt5 installed)
+### How to install (you will need CMake and Qt5 installed)
 
 ```
  1. (make directory for binary): mkdir <directory-name>
@@ -20,7 +20,7 @@ Written in C++ using Qt 5 framework with CMake.
 ```
 
 
-###License
+### License
 
 ![](http://www.gnu.org/graphics/lgplv3-147x51.png)
 

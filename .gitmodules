@@ -1,0 +1,3 @@
+[submodule "tral"]
+	path = tral
+	url = git@github.com:tremr/tral.git

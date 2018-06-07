@@ -15,6 +15,8 @@ set(SOURCE_LIB SampleQtUI.cpp CustomListModel.cpp)
 qt5_add_resources(RESOURCES qml.qrc)
 add_library(sample_Qt_UI_library STATIC ${SOURCE_LIB} ${RESOURCES})
 
+include_directories( ${CMAKE_SOURCE_DIR} )
+
 # Use the Widgets module from Qt 5.
 target_link_libraries(sample_Qt_UI_library Qt5::Quick)
 

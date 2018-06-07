@@ -24,7 +24,7 @@ CustomListModel::CustomListModel( QObject* parent )
 	, _current_row( 0 )
 {
 	_data.append("old");
-	_data.append("<font style='color:#00A900;background-color:#FF0000'>Mar 26 06:52:59 <font style='color:#6495ED;background-color:#FFA500'>marked fragment</font> 2639.118 1677 filtered fragment</font>");
+	_data.append( _filtered_list.get_string().c_str() );
 	_data.append("<font style='color:#00A900;background-color:#FFA000'>Green text on red background</font><br><font style='color: red; background-color: green'>Red text on green background</font>");
 }
 

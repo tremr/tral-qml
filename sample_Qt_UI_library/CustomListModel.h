@@ -20,6 +20,7 @@
 #define SOURCE_DIRECTORY__SAMPLE_QT_UI_LIBRARY_CUSTOMLISTMODEL_H_
 
 
+#include "tral/include/list.h"
 #include <QtCore/QAbstractListModel>
 #include <QtCore/QStringList>
 
@@ -52,6 +53,7 @@ public:
 private:
 	QStringList _data;
 	int         _current_row;
+	Tral::List  _filtered_list;
 };
 
 #endif /* SOURCE_DIRECTORY__SAMPLE_QT_UI_LIBRARY_CUSTOMLISTMODEL_H_ */

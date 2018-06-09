@@ -24,7 +24,7 @@ CustomListModel::CustomListModel( QObject* parent )
 	, _current_row( 0 )
 {
 	_data.append("old");
-	_data.append( _filtered_list.get_string().c_str() );
+	_data.append( _filtered_list.get_row( 0 ).c_str() );
 	_data.append("<font style='color:#00A900;background-color:#FFA000'>Green text on red background</font><br><font style='color: red; background-color: green'>Red text on green background</font>");
 }
 
@@ -38,7 +38,7 @@ int CustomListModel::rowCount( const QModelIndex& parent ) const
 	if (parent.isValid())
 		return 0;
 
-	return _data.size();
+	return _filtered_list.get_row_count();
 }
 
 
@@ -52,7 +52,7 @@ QVariant CustomListModel::data( const QModelIndex& index, int role ) const
 	case ColorRole:
 		return QVariant( index.row() < 2 ? "red" : "darkblue" );
 	case TextRole:
-		return _data.at( index.row() );
+		return _filtered_list.get_row( index.row() ).c_str();
 	default:
 		return QVariant();
 	}

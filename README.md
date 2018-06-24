@@ -14,7 +14,7 @@ Written in C++ using Qt 5 framework with CMake.
  1. (make directory for binary): mkdir <directory-name>
  2. (enter created directory):   cd <directory-name>
  3. (to bind with your Qt repo): export CMAKE_PREFIX_PATH=<Qt-path>/Qt5.10.1/5.10.1-mingw64/lib/cmake/
- 4. (make the asseble):          cmake <tral-qml-path>
+ 4. (make the assembly):          cmake <tral-qml-path>
  5. (just type):                 make
  6. If your Qt assembled dinamycally you may need to copy Qt dll`s to your binary directory.
 ```

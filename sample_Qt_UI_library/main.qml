@@ -55,8 +55,11 @@ ApplicationWindow
 
 					width: parent.width
 					height: parent.height - buttons.height - parent.spacing
-					spacing: 10
+					spacing: 1
 					clip: true
+					focus: true
+					flickDeceleration: 500
+					highlightMoveDuration: 1000
 
 					highlight: Rectangle
 					{
@@ -67,7 +70,7 @@ ApplicationWindow
 					delegate: Rectangle
 					{
 						width: view.width
-						height: 40
+						height: 10
 						color: "skyblue"
 
 						property var isCurrent: ListView.isCurrentItem

@@ -70,7 +70,7 @@ ApplicationWindow
 					delegate: Rectangle
 					{
 						width: view.width
-						height: 10
+						height: 12
 						color: "skyblue"
 
 						property var isCurrent: ListView.isCurrentItem

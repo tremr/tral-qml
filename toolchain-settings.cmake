@@ -21,14 +21,22 @@ set (CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG -mwindows")
 # Helpers---
 # CMake can fails turning on C++17 in some environments.
 function(custom_enable_cxx17 TARGET)
+	message ("Detect compiler for C++17")
+	
+	set_property(TARGET ${TARGET} PROPERTY CXX_STANDARD 17)
+	set_property(TARGET ${TARGET} PROPERTY CXX_STANDARD_REQUIRED ON)
     # Try to turn on C++17
 	target_compile_features(${TARGET} PUBLIC cxx_std_17)
     # Enable C++latest for Visual Studio
 	if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+		message ("MSVC compiler detected")
 		set_target_properties(${TARGET} PROPERTIES COMPILE_FLAGS "/std:c++latest")
     # Enable libc++, libc++experimental and pthread for Clang
     elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    	message ("Clang compiler detected")
 		set_target_properties(${TARGET} PROPERTIES COMPILE_FLAGS "-stdlib=libc++ -pthread")
         target_link_libraries(${TARGET} c++experimental pthread)
+    else()
+    	message ("GNU compiler by default")        
     endif()
 endfunction(custom_enable_cxx17)

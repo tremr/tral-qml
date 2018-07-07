@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
-project(sample_Qt_UI_library VERSION 0.0 DESCRIPTION "sample Qt UI library")
+cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
+project(sample_Qt_UI_library)
 
 # Tell CMake to run moc when necessary:
 set(CMAKE_AUTOMOC ON)

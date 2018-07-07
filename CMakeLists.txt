@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
-project(sample_project VERSION 0.0 DESCRIPTION "sample project")
+cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
+project(sample_project)
 
 message("Starting cmake")
 

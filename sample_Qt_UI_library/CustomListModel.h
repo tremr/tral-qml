@@ -25,7 +25,7 @@
 #include <QtCore/QStringList>
 
 
-class CustomListModel : public QAbstractListModel
+class CustomListModel : public QAbstractListModel, public Tral::Callback
 {
 	Q_OBJECT
 	Q_PROPERTY( int current_row MEMBER _current_row WRITE set_current_row )
@@ -45,10 +45,23 @@ public:
 	virtual QVariant data(const QModelIndex &index, int role) const;
 	virtual QHash<int, QByteArray> roleNames() const;
 
+	// Tral::Callback
+	virtual void on_insert_rows_begin( unsigned first, unsigned last );
+	virtual void on_insert_rows_end( unsigned first, unsigned last );
+
 	void set_current_row( int row );
 
 	Q_INVOKABLE void add();
 	Q_INVOKABLE void remove();
+
+private slots:
+	void slot_insert_rows_begin( unsigned first, unsigned last );
+	void slot_insert_rows_end( unsigned first, unsigned last );
+
+signals:
+	void signal_insert_rows_begin( unsigned first, unsigned last );
+	void signal_insert_rows_end( unsigned first, unsigned last );
+
 
 private:
 	QStringList _data;

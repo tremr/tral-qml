@@ -22,7 +22,11 @@
 CustomListModel::CustomListModel( QObject* parent )
 	: QAbstractListModel( parent )
 	, _current_row( 0 )
+	, _filtered_list( this )
 {
+	QObject::connect( this, &CustomListModel::signal_insert_rows_begin, this, &CustomListModel::slot_insert_rows_begin );
+	QObject::connect( this, &CustomListModel::signal_insert_rows_end, this, &CustomListModel::slot_insert_rows_end );
+
 	_data.append("old");
 	_data.append( _filtered_list.get_row( 0 ).c_str() );
 	_data.append("<font style='color:#00A900;background-color:#FFA000'>Green text on red background</font><br><font style='color: red; background-color: green'>Red text on green background</font>");
@@ -33,7 +37,7 @@ CustomListModel::CustomListModel( QObject* parent )
 {}
 
 
-int CustomListModel::rowCount( const QModelIndex& parent ) const
+/*virtual*/ int CustomListModel::rowCount( const QModelIndex& parent ) const
 {
 	if (parent.isValid())
 		return 0;
@@ -42,7 +46,7 @@ int CustomListModel::rowCount( const QModelIndex& parent ) const
 }
 
 
-QVariant CustomListModel::data( const QModelIndex& index, int role ) const
+/*virtual*/ QVariant CustomListModel::data( const QModelIndex& index, int role ) const
 {
 	if (!index.isValid())
 		return QVariant();
@@ -59,13 +63,25 @@ QVariant CustomListModel::data( const QModelIndex& index, int role ) const
 }
 
 
-QHash<int, QByteArray> CustomListModel::roleNames() const
+/*virtual*/ QHash<int, QByteArray> CustomListModel::roleNames() const
 {
 	QHash<int, QByteArray> roles = QAbstractListModel::roleNames();
 	roles[ColorRole] = "color";
 	roles[TextRole] = "text";
 
 	return roles;
+}
+
+
+/*virtual*/ void CustomListModel::on_insert_rows_begin( unsigned first, unsigned last )
+{
+	emit signal_insert_rows_begin( first, last );
+}
+
+
+/*virtual*/ void CustomListModel::on_insert_rows_end( unsigned first, unsigned last )
+{
+	emit signal_insert_rows_end( first, last );
 }
 
 
@@ -107,3 +123,18 @@ void CustomListModel::remove()
 	endRemoveRows();
 }
 
+
+void CustomListModel::slot_insert_rows_begin( unsigned first, unsigned last )
+{
+	beginInsertRows( QModelIndex(), first, last );
+//	beginResetModel();
+}
+
+
+void CustomListModel::slot_insert_rows_end( unsigned first, unsigned last )
+{
+	endInsertRows();
+	QModelIndex index = createIndex( first, last, nullptr );
+	emit dataChanged( index, index ); // TODO(roman.tremaskin): looks wrong
+//	endResetModel();
+}

@@ -83,6 +83,7 @@ CustomListModel::CustomListModel( QObject* parent )
 /*virtual*/ void CustomListModel::on_insert_rows_begin( unsigned first, unsigned last )
 {
 	log() << __FUNCTION__ << ": first(" << first << ") last(" << last << ")" << std::endl;
+	_filtered_list.lock();
 	emit signal_insert_rows_begin( first, last );
 //	slot_insert_rows_begin( first, last );
 }
@@ -91,6 +92,7 @@ CustomListModel::CustomListModel( QObject* parent )
 /*virtual*/ void CustomListModel::on_insert_rows_end( unsigned first, unsigned last )
 {
 	log() << __FUNCTION__ << ": first(" << first << ") last(" << last << ")" << std::endl;
+	_filtered_list.lock();
 	emit signal_insert_rows_end( first, last );
 //	slot_insert_rows_end( first, last );
 }
@@ -140,6 +142,7 @@ void CustomListModel::slot_insert_rows_begin( unsigned first, unsigned last )
 //	QModelIndex index = createIndex( first, 0, nullptr );
 	beginInsertRows( QModelIndex(), first, last );
 	log() << __FUNCTION__ << ": first(" << first << ") last(" << last << ")" << std::endl;
+	_filtered_list.unlock();
 
 //	beginResetModel();
 }
@@ -149,6 +152,7 @@ void CustomListModel::slot_insert_rows_end( unsigned first, unsigned last )
 {
 	endInsertRows();
 	log() << __FUNCTION__ << ": first(" << first << ") last(" << last << ")" << std::endl;
+	_filtered_list.unlock();
 
 //	QModelIndex index = createIndex( first, last, nullptr );
 //	emit dataChanged( index, index ); // TODO(roman.tremaskin): looks wrong

@@ -20,12 +20,12 @@
 #define SOURCE_DIRECTORY__SAMPLE_QT_UI_LIBRARY_CUSTOMLISTMODEL_H_
 
 
-#include "tral/include/list.h"
+#include "tral/include/List.h"
 #include <QtCore/QAbstractListModel>
 #include <QtCore/QStringList>
 
 
-class CustomListModel : public QAbstractListModel, public Tral::Callback
+class CustomListModel : public QAbstractListModel, public Tral::Callback, private Tral::Log
 {
 	Q_OBJECT
 	Q_PROPERTY( int current_row MEMBER _current_row WRITE set_current_row )
@@ -54,16 +54,15 @@ public:
 	Q_INVOKABLE void add();
 	Q_INVOKABLE void remove();
 
-private slots:
+	private slots:
 	void slot_insert_rows_begin( unsigned first, unsigned last );
 	void slot_insert_rows_end( unsigned first, unsigned last );
 
-signals:
+	signals:
 	void signal_insert_rows_begin( unsigned first, unsigned last );
 	void signal_insert_rows_end( unsigned first, unsigned last );
 
-
-private:
+	private:
 	QStringList _data;
 	int         _current_row;
 	Tral::List  _filtered_list;

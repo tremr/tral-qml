@@ -17,10 +17,13 @@
 
 
 #include "CustomListModel.h"
+#include <cassert>
+#include <iostream>
 
 
 CustomListModel::CustomListModel( QObject* parent )
 	: QAbstractListModel( parent )
+	, Tral::Log( "CustomListModel" )
 	, _current_row( 0 )
 	, _filtered_list( this )
 {
@@ -49,7 +52,10 @@ CustomListModel::CustomListModel( QObject* parent )
 /*virtual*/ QVariant CustomListModel::data( const QModelIndex& index, int role ) const
 {
 	if (!index.isValid())
+	{
+		assert( "unexpected data role" );
 		return QVariant();
+	}
 
 	switch (role)
 	{
@@ -58,6 +64,7 @@ CustomListModel::CustomListModel( QObject* parent )
 	case TextRole:
 		return _filtered_list.get_row( index.row() ).c_str();
 	default:
+		assert( "unexpected data role" );
 		return QVariant();
 	}
 }
@@ -75,13 +82,17 @@ CustomListModel::CustomListModel( QObject* parent )
 
 /*virtual*/ void CustomListModel::on_insert_rows_begin( unsigned first, unsigned last )
 {
+	log() << __FUNCTION__ << ": first(" << first << ") last(" << last << ")" << std::endl;
 	emit signal_insert_rows_begin( first, last );
+//	slot_insert_rows_begin( first, last );
 }
 
 
 /*virtual*/ void CustomListModel::on_insert_rows_end( unsigned first, unsigned last )
 {
+	log() << __FUNCTION__ << ": first(" << first << ") last(" << last << ")" << std::endl;
 	emit signal_insert_rows_end( first, last );
+//	slot_insert_rows_end( first, last );
 }
 
 
@@ -126,7 +137,10 @@ void CustomListModel::remove()
 
 void CustomListModel::slot_insert_rows_begin( unsigned first, unsigned last )
 {
+//	QModelIndex index = createIndex( first, 0, nullptr );
 	beginInsertRows( QModelIndex(), first, last );
+	log() << __FUNCTION__ << ": first(" << first << ") last(" << last << ")" << std::endl;
+
 //	beginResetModel();
 }
 
@@ -134,7 +148,9 @@ void CustomListModel::slot_insert_rows_begin( unsigned first, unsigned last )
 void CustomListModel::slot_insert_rows_end( unsigned first, unsigned last )
 {
 	endInsertRows();
-	QModelIndex index = createIndex( first, last, nullptr );
-	emit dataChanged( index, index ); // TODO(roman.tremaskin): looks wrong
+	log() << __FUNCTION__ << ": first(" << first << ") last(" << last << ")" << std::endl;
+
+//	QModelIndex index = createIndex( first, last, nullptr );
+//	emit dataChanged( index, index ); // TODO(roman.tremaskin): looks wrong
 //	endResetModel();
 }

@@ -29,6 +29,8 @@ CustomListModel::CustomListModel( QObject* parent )
 {
 	QObject::connect( this, &CustomListModel::signal_insert_rows_begin, this, &CustomListModel::slot_insert_rows_begin );
 	QObject::connect( this, &CustomListModel::signal_insert_rows_end, this, &CustomListModel::slot_insert_rows_end );
+	QObject::connect( this, &CustomListModel::signal_remove_rows_begin, this, &CustomListModel::slot_remove_rows_begin );
+	QObject::connect( this, &CustomListModel::signal_remove_rows_end, this, &CustomListModel::slot_remove_rows_end );
 
 	_data.append("old");
 	_data.append( _filtered_list.get_row( 0 ).c_str() );
@@ -85,7 +87,6 @@ CustomListModel::CustomListModel( QObject* parent )
 	log() << __FUNCTION__ << ": first(" << first << ") last(" << last << ")" << std::endl;
 	_filtered_list.lock();
 	emit signal_insert_rows_begin( first, last );
-//	slot_insert_rows_begin( first, last );
 }
 
 
@@ -94,7 +95,22 @@ CustomListModel::CustomListModel( QObject* parent )
 	log() << __FUNCTION__ << ": first(" << first << ") last(" << last << ")" << std::endl;
 	_filtered_list.lock();
 	emit signal_insert_rows_end( first, last );
-//	slot_insert_rows_end( first, last );
+}
+
+
+/*virtual*/ void CustomListModel::on_remove_rows_begin( unsigned first, unsigned last )
+{
+	log() << __FUNCTION__ << ": first(" << first << ") last(" << last << ")" << std::endl;
+	_filtered_list.lock();
+	emit signal_remove_rows_begin( first, last );
+}
+
+
+/*virtual*/ void CustomListModel::on_remove_rows_end( unsigned first, unsigned last )
+{
+	log() << __FUNCTION__ << ": first(" << first << ") last(" << last << ")" << std::endl;
+	_filtered_list.lock();
+	emit signal_remove_rows_end( first, last );
 }
 
 
@@ -157,4 +173,20 @@ void CustomListModel::slot_insert_rows_end( unsigned first, unsigned last )
 //	QModelIndex index = createIndex( first, last, nullptr );
 //	emit dataChanged( index, index ); // TODO(roman.tremaskin): looks wrong
 //	endResetModel();
+}
+
+
+void CustomListModel::slot_remove_rows_begin( unsigned first, unsigned last )
+{
+	beginRemoveRows( QModelIndex(), first, last );
+	log() << __FUNCTION__ << ": first(" << first << ") last(" << last << ")" << std::endl;
+	_filtered_list.unlock();
+}
+
+
+void CustomListModel::slot_remove_rows_end( unsigned first, unsigned last )
+{
+	endRemoveRows();
+	log() << __FUNCTION__ << ": first(" << first << ") last(" << last << ")" << std::endl;
+	_filtered_list.unlock();
 }

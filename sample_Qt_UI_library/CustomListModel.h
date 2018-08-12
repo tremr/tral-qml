@@ -48,6 +48,9 @@ public:
 	// Tral::Callback
 	virtual void on_insert_rows_begin( unsigned first, unsigned last );
 	virtual void on_insert_rows_end( unsigned first, unsigned last );
+	virtual void on_remove_rows_begin( unsigned first, unsigned last );
+	virtual void on_remove_rows_end( unsigned first, unsigned last );
+
 
 	void set_current_row( int row );
 
@@ -57,10 +60,14 @@ public:
 	private slots:
 	void slot_insert_rows_begin( unsigned first, unsigned last );
 	void slot_insert_rows_end( unsigned first, unsigned last );
+	void slot_remove_rows_begin( unsigned first, unsigned last );
+	void slot_remove_rows_end( unsigned first, unsigned last );
 
 	signals:
 	void signal_insert_rows_begin( unsigned first, unsigned last );
 	void signal_insert_rows_end( unsigned first, unsigned last );
+	void signal_remove_rows_begin( unsigned first, unsigned last );
+	void signal_remove_rows_end( unsigned first, unsigned last );
 
 	private:
 	QStringList _data;

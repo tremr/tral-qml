@@ -72,6 +72,7 @@ ApplicationWindow
 						width: view.width
 						height: 12
 						color: "skyblue"
+						id: raw_rect
 
 						property var isCurrent: ListView.isCurrentItem
 
@@ -92,6 +93,18 @@ ApplicationWindow
 								view.currentIndex = model.index
 							}
 						}
+
+						ListView.onRemove:
+							SequentialAnimation
+							{
+								ScriptAction { script: console.log("ListView.onRemove2"); }
+								PropertyAction { target: raw_rect; property: "ListView.delayRemove"; value: true }
+
+								PropertyAnimation { target: raw_rect; property: "opacity"; to: 0.0; duration: 500 }
+								PropertyAnimation { target: raw_rect; property: "height"; to: 0; duration: 500 }
+
+								PropertyAction { target: raw_rect; property: "ListView.delayRemove"; value: false }
+							}
 					}
 				}
 			}

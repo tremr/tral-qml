@@ -1,5 +1,5 @@
 
-set (MY_CXX_FLAGS  "-Wall -Werror -fmessage-length=0")
+set (MY_CXX_FLAGS  "-Wall -Wextra -Werror -fmessage-length=0")
 
 # Verbose build
 #set (MY_CXX_FLAGS "${MY_CXX_FLAGS} -v")

@@ -27,10 +27,12 @@ CustomListModel::CustomListModel( QObject* parent )
 	, _current_row( 0 )
 	, _filtered_list( this )
 {
-	QObject::connect( this, &CustomListModel::signal_insert_rows_begin, this, &CustomListModel::slot_insert_rows_begin );
-	QObject::connect( this, &CustomListModel::signal_insert_rows_end, this, &CustomListModel::slot_insert_rows_end );
-	QObject::connect( this, &CustomListModel::signal_remove_rows_begin, this, &CustomListModel::slot_remove_rows_begin );
-	QObject::connect( this, &CustomListModel::signal_remove_rows_end, this, &CustomListModel::slot_remove_rows_end );
+	QObject::connect( this, &CustomListModel::signal_critical_section_begin, this, &CustomListModel::slot_critical_section_begin );
+	QObject::connect( this, &CustomListModel::signal_critical_section_end,   this, &CustomListModel::slot_critical_section_end );
+	QObject::connect( this, &CustomListModel::signal_insert_rows_begin,      this, &CustomListModel::slot_insert_rows_begin );
+	QObject::connect( this, &CustomListModel::signal_insert_rows_end,        this, &CustomListModel::slot_insert_rows_end );
+	QObject::connect( this, &CustomListModel::signal_remove_rows_begin,      this, &CustomListModel::slot_remove_rows_begin );
+	QObject::connect( this, &CustomListModel::signal_remove_rows_end,        this, &CustomListModel::slot_remove_rows_end );
 }
 
 
@@ -74,6 +76,20 @@ CustomListModel::CustomListModel( QObject* parent )
 	roles[TextRole] = "text";
 
 	return roles;
+}
+
+
+/*virtual*/ void CustomListModel::on_critical_section_begin()
+{
+	log() << __FUNCTION__ << std::endl;
+	emit signal_critical_section_begin();
+}
+
+
+/*virtual*/ void CustomListModel::on_critical_section_end()
+{
+	log() << __FUNCTION__ << std::endl;
+	emit signal_critical_section_end();
 }
 
 
@@ -141,6 +157,20 @@ void CustomListModel::remove()
 	QStringList::iterator it = _data.begin() + _current_row;
 	_data.erase( it );
 	endRemoveRows();
+}
+
+
+void CustomListModel::slot_critical_section_begin()
+{
+	log() << __FUNCTION__ << std::endl;
+	_filtered_list.critical_section_begin_ok();
+}
+
+
+void CustomListModel::slot_critical_section_end()
+{
+	log() << __FUNCTION__ << std::endl;
+	_filtered_list.critical_section_end_ok();
 }
 
 

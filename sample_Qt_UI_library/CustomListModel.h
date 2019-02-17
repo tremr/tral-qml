@@ -46,6 +46,8 @@ public:
 	virtual QHash<int, QByteArray> roleNames() const;
 
 	// Tral::Callback
+	virtual void on_critical_section_begin();
+	virtual void on_critical_section_end();
 	virtual void on_insert_rows_begin( unsigned first, unsigned last );
 	virtual void on_insert_rows_end( unsigned first, unsigned last );
 	virtual void on_remove_rows_begin( unsigned first, unsigned last );
@@ -58,12 +60,16 @@ public:
 	Q_INVOKABLE void remove();
 
 	private slots:
+	void slot_critical_section_begin();
+	void slot_critical_section_end();
 	void slot_insert_rows_begin( unsigned first, unsigned last );
 	void slot_insert_rows_end( unsigned first, unsigned last );
 	void slot_remove_rows_begin( unsigned first, unsigned last );
 	void slot_remove_rows_end( unsigned first, unsigned last );
 
 	signals:
+	void signal_critical_section_begin();
+	void signal_critical_section_end();
 	void signal_insert_rows_begin( unsigned first, unsigned last );
 	void signal_insert_rows_end( unsigned first, unsigned last );
 	void signal_remove_rows_begin( unsigned first, unsigned last );

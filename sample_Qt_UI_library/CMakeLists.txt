@@ -10,6 +10,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # Widgets finds its own dependencies.
 find_package(Qt5 REQUIRED Quick)
+find_package(Threads)
 
 set(SOURCE_LIB SampleQtUI.cpp CustomListModel.cpp)
 qt5_add_resources(RESOURCES qml.qrc)
@@ -19,5 +20,6 @@ include_directories( ${CMAKE_SOURCE_DIR} )
 
 # Use the Widgets module from Qt 5.
 target_link_libraries(sample_Qt_UI_library Qt5::Quick)
+target_link_libraries (sample_Qt_UI_library ${CMAKE_THREAD_LIBS_INIT})
 
 include(../toolchain-settings.cmake)
